@@ -1,10 +1,11 @@
+import Navbar from "./component/Navbar.jsx";
+import { Container } from "react-bootstrap";
+
 function App() {
-  return(
-    <div>
-      <h2>
-        shopping card
-      </h2>
-    </div>
-  )
+  return (
+    <Container>
+      <Navbar />
+    </Container>
+  );
 }
-export default App
+export default App;
