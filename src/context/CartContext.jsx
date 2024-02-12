@@ -13,23 +13,25 @@ export const CartContext = createContext({
 });
 
 export function CartProvider({ children }) {
-  const [cartProducts, SetProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
 
   const getProductQuantity = (id) => {
-    const quantity = cartProducts.find((item) => item.id === id)?.quantity;
+    
+    const quantity = cartProducts.find((item) => item?.id === id)?.quantity;
     if (quantity === undefined) {
       return 0;
-    } else {
+    } 
       return quantity;
-    }
+    
   };
+
 
   const addItemToCart = (id) => {
     const quantity = getProductQuantity(id);
     if (quantity === 0) {
-      SetProducts([...cartProducts, { id: id, quantity: 1 }]);
+      setCartProducts([...cartProducts, { id:id, quantity: 1 }]);
     } else {
-      SetProducts(
+      setCartProducts(
         cartProducts.map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         )
@@ -38,9 +40,9 @@ export function CartProvider({ children }) {
   };
 
   const deleteFromCart = (id) => {
-    SetProducts((cartProducts) => {
-      cartProducts.filter((item) => {
-        return item.id != id;
+    setCartProducts((cartProducts) => {
+      return   cartProducts.filter((item) => {
+         item.id !== id;
       });
     });
   };
@@ -49,26 +51,37 @@ export function CartProvider({ children }) {
     if (quantity === 1) {
       deleteFromCart(id);
     } else {
-      SetProducts(
-        cartProducts.map((item) => {
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item;
-        })
+      setCartProducts(
+        cartProducts.map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
       );
     }
   };
+  
+  // const getTotalAmount = () => {
+  //   const totalAmount = 0;
+  //   cartProducts.map((item) => {
+  //     const productData = getProductData(item.id);
+  //     //   productData.price * item.quantity       //       قیمت یک ایتم بر اساس کوانتیتی
+  //     totalAmount += productData.price * item.quantity;
+  //     // مقدار برگشتی رو باید الان نمایش بدیم:
+  //     return totalAmount
+  //   });
+  // };
+  // یا
   const getTotalAmount = () => {
-    const totalAmount = 0;
-    cartProducts.map((item) => {
+    let totalAmount = 0;
+    cartProducts.forEach((item) => {
       const productData = getProductData(item.id);
-      //   productData.price * item.quantity       //       قیمت یک ایتم بر اساس کوانتیتی
       totalAmount += productData.price * item.quantity;
     });
+    return totalAmount;
   };
   // ..........................................................
   const ContextValue = {
     items: cartProducts,
     getProductQuantity,
-    addItemToCart,
     addItemToCart,
     removeItemFromCart,
     deleteFromCart,
