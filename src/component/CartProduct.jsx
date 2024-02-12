@@ -13,7 +13,7 @@ console.log(productData,"1234")
 <p>موضوع:{productData.title}</p>
 <p>تعداد:{quantity}</p>
 <p>قیمت:{productData.price *quantity}</p>
-<Button size="sm" className="mb-5 text-white"  variant="btn btn-outline bg-dark"  onClick={()=>{Cart.deleteFromCart(id)}}>حذف</Button>
+<Button size="sm" className="mb-5 text-white"  variant="btn btn-outline bg-dark"  onClick={()=>{Cart.removeItemFromCart(id)}}>حذف</Button>
 </>
 
     )
